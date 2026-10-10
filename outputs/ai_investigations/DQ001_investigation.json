@@ -1,0 +1,52 @@
+{
+  "rule_id": "DQ001",
+  "issue_summary": "An analysis of the customer master dataset revealed that the customer identifier field contains duplicate values. Instead of every record representing a strictly unique customer, multiple rows share identical customer identification numbers.",
+  "observed_evidence": {
+    "rule_id": "DQ001",
+    "check_name": "Customer Uniqueness",
+    "dataset": "customers",
+    "field": "customer_id",
+    "dimension": "UNIQUENESS",
+    "status": "FAIL",
+    "severity": "HIGH",
+    "records_checked": 10150,
+    "records_affected": 150,
+    "metric_value": 0.014778325123152709,
+    "threshold": 0.001,
+    "description": "Duplicate customer_id values in the customer master. duplicate_excess_records = total rows minus unique IDs. duplicate_rate = excess / total rows. FAIL when duplicate_rate > 0.001.",
+    "evidence": {
+      "total_rows": 10150,
+      "unique_customer_ids": 10000,
+      "duplicate_excess_records": 150,
+      "duplicate_rate": 0.014778325123152709,
+      "sample_duplicate_ids": [
+        "C002931",
+        "C009066",
+        "C009120",
+        "C002684",
+        "C008595"
+      ]
+    }
+  },
+  "business_impact": "As an implication, having duplicate entries in the customer master table can distort reporting metrics related to total client counts, misalign relationship management assignments, and cause downstream errors in credit risk aggregation and portfolio segmentation.",
+  "possible_root_causes": [
+    {
+      "hypothesis": "Upstream source systems may be improperly handling ingestion retries, leading to duplicate record insertion during batch loads.",
+      "verification_step": "Review ingestion pipeline logs and load timestamps for the affected records to see if duplicate inserts correspond to job retry attempts."
+    },
+    {
+      "hypothesis": "Concurrent updates from multiple feeder channels without proper deduplication logic could be injecting identical records into the master table.",
+      "verification_step": "Examine system integration points and API payloads to check if parallel writes lack unique constraint enforcement."
+    }
+  ],
+  "recommended_investigation_steps": [
+    "Trace the lineage of the affected customer records back to their original staging tables to determine where the duplication is first introduced.",
+    "Analyze the creation and update timestamps of the duplicated rows to identify patterns in when these records are generated."
+  ],
+  "recommended_remediation": [
+    "Implement strict primary key and unique constraints on the customer identifier field within the database schema to prevent duplicate inserts at the storage layer.",
+    "Update the data ingestion and ETL pipelines to incorporate automated deduplication logic prior to writing records to the customer master table."
+  ],
+  "confidence_level": "high",
+  "limitations": "All root causes presented are strictly hypotheses that require validation against system logs and upstream code repositories. Furthermore, this analysis is performed on a synthetic commercial-banking analytics portfolio, and I do not have access to live banking systems, source files, or production logs."
+}

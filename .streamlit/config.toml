@@ -1,0 +1,14 @@
+[server]
+# Keep the browser upload limit aligned with the analyzer.
+maxUploadSize = 20
+
+[theme]
+base = "dark"
+primaryColor = "#22d3ee"
+backgroundColor = "#0b1020"
+secondaryBackgroundColor = "#141a2e"
+textColor = "#e7eefc"
+font = "sans-serif"
+linkColor = "#c4b5fd"
+borderColor = "#243049"
+codeBackgroundColor = "#10182c"

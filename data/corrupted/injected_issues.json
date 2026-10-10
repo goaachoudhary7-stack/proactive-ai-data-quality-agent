@@ -1,0 +1,65 @@
+[
+    {
+        "rule_id": "DQ001",
+        "issue_name": "Duplicate Customers",
+        "affected_dataset": "customers",
+        "affected_field": "customer_id",
+        "intended_rate_or_condition": "approximately 1.5%",
+        "number_of_records_modified": 150,
+        "description": "Exact copies of existing customer records were appended so some customer_id values appear more than once."
+    },
+    {
+        "rule_id": "DQ002",
+        "issue_name": "Missing Customer IDs",
+        "affected_dataset": "interactions",
+        "affected_field": "customer_id",
+        "intended_rate_or_condition": "approximately 4%",
+        "number_of_records_modified": 4000,
+        "description": "Interaction records were given a NULL customer_id."
+    },
+    {
+        "rule_id": "DQ003",
+        "issue_name": "Broken Customer References",
+        "affected_dataset": "interactions",
+        "affected_field": "customer_id",
+        "intended_rate_or_condition": "approximately 2%",
+        "number_of_records_modified": 2000,
+        "description": "Interaction records were assigned fictional customer IDs that do not exist in the customer master."
+    },
+    {
+        "rule_id": "DQ004",
+        "issue_name": "Missing Campaign Attribution",
+        "affected_dataset": "interactions",
+        "affected_field": "campaign_id",
+        "intended_rate_or_condition": "approximately 12% of eligible campaign-driven interactions",
+        "number_of_records_modified": 6623,
+        "description": "campaign_id was removed from interactions that already had campaign attribution. Legitimate non-campaign interactions were left unchanged."
+    },
+    {
+        "rule_id": "DQ005",
+        "issue_name": "Unusual Null-Rate Spike",
+        "affected_dataset": "customers",
+        "affected_field": "industry",
+        "intended_rate_or_condition": "approximately 15% NULL industry inside the recent last_updated window; near-zero outside that subgroup",
+        "number_of_records_modified": 363,
+        "description": "Industry was blanked for a controlled share of recently updated customers to create a measurable null-rate spike versus the baseline."
+    },
+    {
+        "rule_id": "DQ006",
+        "issue_name": "Stale Dataset",
+        "affected_dataset": "opportunities",
+        "affected_field": "last_updated",
+        "intended_rate_or_condition": "7 days older than other datasets",
+        "number_of_records_modified": 15000,
+        "description": "Opportunity last_updated timestamps were shifted backward so the opportunities table appears several days stale."
+    },
+    {
+        "rule_id": "DQ007",
+        "issue_name": "Unexpected Volume Change",
+        "affected_dataset": "interactions",
+        "affected_field": "interaction_date",
+        "intended_rate_or_condition": "volume on 2026-09-27 reduced to approximately 500 rows",
+        "number_of_records_modified": 1535,
+        "description": "A controlled number of interaction records were removed on 2026-09-27 to simulate an unexpected drop in daily volume."
+    }
+]

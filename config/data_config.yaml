@@ -1,0 +1,127 @@
+# All values here are for 100% synthetic, fictional portfolio data.
+# Changing these settings should be enough for most size/rate experiments.
+
+random_seed: 42
+
+# Fixed snapshot keeps generated dates identical on every rerun.
+snapshot_date: "2026-09-30"
+
+dataset_sizes:
+  customers: 10000
+  campaigns: 25
+  interactions: 100000
+  opportunities: 15000
+
+date_ranges:
+  customer_created_start: "2018-01-01"
+  campaign_window_start: "2025-10-01"
+  # Interaction history is short and fairly even so daily volume is measurable.
+  interaction_window_days: 50
+  opportunity_created_start: "2025-01-01"
+
+customers:
+  segments:
+    - SME
+    - Mid-Market
+    - Corporate
+  regions:
+    - Amsterdam
+    - Rotterdam
+    - Utrecht
+    - The Hague
+    - Eindhoven
+  industries:
+    - Technology
+    - Retail
+    - Manufacturing
+    - Professional Services
+    - Logistics
+    - Healthcare
+    - Energy
+  statuses:
+    - Active
+    - Inactive
+  source_system: CRM
+  # Some customers are touched near the snapshot so DQ005 has a clear subgroup.
+  recent_update_share: 0.22
+  recent_update_window_days: 14
+
+campaigns:
+  types:
+    - Acquisition
+    - Cross-sell
+    - Engagement
+    - Retention
+  channels:
+    - Email
+    - Paid Search
+    - Web
+    - Event
+    - Relationship Manager
+  source_system: Marketing Platform
+
+opportunities:
+  products:
+    - Business Lending
+    - Payments
+    - Cash Management
+    - Trade Finance
+    - Working Capital
+  stages:
+    - Lead
+    - Engaged
+    - Qualified
+    - Opportunity
+    - Converted
+    - Lost
+  source_system: CRM
+
+corruption:
+  dq001_duplicate_customer_rate: 0.015
+  dq002_missing_customer_id_rate: 0.04
+  dq003_broken_reference_rate: 0.02
+  dq003_fictional_id_start: 990001
+  dq004_missing_campaign_rate: 0.12
+  dq005_industry_null_rate: 0.15
+  dq005_window_days: 14
+  dq006_stale_days: 7
+  dq007_days_before_snapshot: 3
+  dq007_target_volume: 500
+
+# Phase 2 Data Quality Engine.
+# These settings are used only by src/dq_engine/. They are ordinary quality
+# thresholds, not copies of the corruption rates above. Detection never reads
+# data/corrupted/injected_issues.json.
+dq_engine:
+  # Interaction types that should carry campaign_id. Chosen from the generator's
+  # high campaign-probability events (email and events). RM activity and most
+  # organic web visits may legitimately have a NULL campaign_id.
+  campaign_driven_interaction_types:
+    - Email Open
+    - Email Click
+    - Event Attendance
+  # Trailing window used by DQ007 when computing a daily-volume median.
+  volume_rolling_window_days: 7
+
+dq_thresholds:
+  # DQ001: customer_id should be unique. Flag when extra duplicate rows exceed
+  # 0.1% of the customer table (one duplicate in a thousand rows).
+  duplicate_customer_rate: 0.001
+  # DQ002: almost every interaction needs a customer_id. Flag above 1% missing.
+  missing_customer_id_rate: 0.01
+  # DQ003: non-null customer keys should resolve to the master. Flag above 0.5%.
+  broken_reference_rate: 0.005
+  # DQ004: among campaign-driven types only, missing campaign_id above 8% is a fail.
+  campaign_attribution_missing_rate: 0.08
+  # DQ005: "recent" means last_updated within this many days of the latest
+  # timestamp in customers (inclusive window: max_date minus days-1).
+  industry_recent_window_days: 14
+  # DQ005: fail when recent industry NULL rate exceeds the older baseline by
+  # more than 5 percentage points.
+  industry_null_rate_difference: 0.05
+  # DQ006: opportunities may lag other tables by a couple of days. Fail when
+  # the lag versus the other datasets' newest last_updated exceeds 2 days.
+  opportunity_freshness_days: 2
+  # DQ007: fail when the worst day's volume is at least 50% below its baseline
+  # median (percentage deviation <= -0.50).
+  interaction_volume_drop_percentage: 0.50

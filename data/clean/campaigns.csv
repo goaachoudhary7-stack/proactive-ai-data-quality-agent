@@ -1,0 +1,26 @@
+campaign_id,campaign_name,campaign_type,channel,start_date,end_date,budget,status,source_system,last_updated
+CMP001,Horizon Acquisition 2026,Acquisition,Web,2026-08-12,2026-09-30,234805.0,Active,Marketing Platform,2026-08-12
+CMP002,Pulse Engagement 2026,Engagement,Relationship Manager,2026-04-19,2026-06-20,156265.0,Completed,Marketing Platform,2026-04-19
+CMP003,Bridge Retention 2026,Retention,Email,2025-12-25,2026-03-08,110602.0,Completed,Marketing Platform,2026-05-23
+CMP004,Northstar Acquisition 2026,Acquisition,Web,2026-03-26,2026-05-04,217626.0,Completed,Marketing Platform,2026-07-18
+CMP005,Harbor Acquisition 2026,Acquisition,Email,2026-04-18,2026-07-26,236478.0,Completed,Marketing Platform,2026-05-04
+CMP006,Summit Cross-sell 2026,Cross-sell,Email,2026-03-06,2026-05-09,149558.0,Completed,Marketing Platform,2026-05-26
+CMP007,Lantern Acquisition 2026,Acquisition,Relationship Manager,2026-01-09,2026-04-26,108243.0,Completed,Marketing Platform,2026-08-13
+CMP008,Compass Acquisition 2026,Acquisition,Relationship Manager,2026-04-20,2026-06-13,90278.0,Completed,Marketing Platform,2026-05-14
+CMP009,Anchor Engagement 2026,Engagement,Web,2025-10-24,2026-01-30,54504.0,Completed,Marketing Platform,2026-02-10
+CMP010,Vista Engagement 2026,Engagement,Event,2026-07-16,2026-08-06,71520.0,Completed,Marketing Platform,2026-08-14
+CMP011,Horizon Engagement 2026,Engagement,Relationship Manager,2025-11-12,2026-02-06,119940.0,Completed,Marketing Platform,2026-04-04
+CMP012,Pulse Retention 2026,Retention,Event,2025-11-03,2026-01-06,33818.0,Completed,Marketing Platform,2026-07-07
+CMP013,Bridge Engagement 2026,Engagement,Web,2025-10-26,2026-02-19,73969.0,Completed,Marketing Platform,2026-02-28
+CMP014,Northstar Acquisition 2026,Acquisition,Email,2025-12-08,2026-03-13,117966.0,Completed,Marketing Platform,2026-02-25
+CMP015,Harbor Engagement 2026,Engagement,Paid Search,2026-02-20,2026-04-30,233060.0,Completed,Marketing Platform,2026-09-09
+CMP016,Summit Cross-sell 2026,Cross-sell,Paid Search,2026-02-19,2026-04-01,137207.0,Completed,Marketing Platform,2026-06-26
+CMP017,Lantern Cross-sell 2026,Cross-sell,Web,2026-07-29,2026-09-02,148519.0,Completed,Marketing Platform,2026-09-16
+CMP018,Compass Retention 2026,Retention,Web,2026-06-28,2026-09-17,108080.0,Completed,Marketing Platform,2026-09-03
+CMP019,Anchor Retention 2026,Retention,Paid Search,2026-06-09,2026-08-01,209915.0,Completed,Marketing Platform,2026-09-07
+CMP020,Vista Acquisition 2026,Acquisition,Event,2026-04-04,2026-06-03,156411.0,Completed,Marketing Platform,2026-05-24
+CMP021,Horizon Retention 2026,Retention,Paid Search,2026-01-26,2026-05-13,184087.0,Completed,Marketing Platform,2026-08-01
+CMP022,Pulse Engagement 2026,Engagement,Email,2025-11-22,2025-12-18,16087.0,Completed,Marketing Platform,2026-02-28
+CMP023,Bridge Cross-sell 2026,Cross-sell,Email,2026-09-15,2026-11-24,51763.0,Active,Marketing Platform,2026-09-15
+CMP024,Northstar Acquisition 2026,Acquisition,Event,2026-06-28,2026-09-05,30621.0,Completed,Marketing Platform,2026-09-05
+CMP025,Harbor Cross-sell 2026,Cross-sell,Email,2026-02-20,2026-03-16,137068.0,Completed,Marketing Platform,2026-08-15

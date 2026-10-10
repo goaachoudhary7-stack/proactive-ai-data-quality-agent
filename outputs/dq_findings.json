@@ -1,0 +1,176 @@
+{
+  "checks_run": 7,
+  "passed": 0,
+  "warnings": 0,
+  "failed": 7,
+  "findings": [
+    {
+      "rule_id": "DQ001",
+      "check_name": "Customer Uniqueness",
+      "dataset": "customers",
+      "field": "customer_id",
+      "dimension": "UNIQUENESS",
+      "status": "FAIL",
+      "severity": "HIGH",
+      "records_checked": 10150,
+      "records_affected": 150,
+      "metric_value": 0.014778325123152709,
+      "threshold": 0.001,
+      "description": "Duplicate customer_id values in the customer master. duplicate_excess_records = total rows minus unique IDs. duplicate_rate = excess / total rows. FAIL when duplicate_rate > 0.001.",
+      "evidence": {
+        "total_rows": 10150,
+        "unique_customer_ids": 10000,
+        "duplicate_excess_records": 150,
+        "duplicate_rate": 0.014778325123152709,
+        "sample_duplicate_ids": [
+          "C002931",
+          "C009066",
+          "C009120",
+          "C002684",
+          "C008595"
+        ]
+      }
+    },
+    {
+      "rule_id": "DQ002",
+      "check_name": "Customer ID Completeness",
+      "dataset": "interactions",
+      "field": "customer_id",
+      "dimension": "COMPLETENESS",
+      "status": "FAIL",
+      "severity": "HIGH",
+      "records_checked": 98465,
+      "records_affected": 3933,
+      "metric_value": 0.03994312699944143,
+      "threshold": 0.01,
+      "description": "NULL or blank customer_id on interaction records. NULL percentage = missing / total interaction records. FAIL when the missing rate > 0.01.",
+      "evidence": {
+        "total_interaction_records": 98465,
+        "null_customer_ids": 3933,
+        "null_percentage": 0.03994312699944143
+      }
+    },
+    {
+      "rule_id": "DQ003",
+      "check_name": "Customer Referential Integrity",
+      "dataset": "interactions",
+      "field": "customer_id",
+      "dimension": "REFERENTIAL_INTEGRITY",
+      "status": "FAIL",
+      "severity": "CRITICAL",
+      "records_checked": 94532,
+      "records_affected": 1961,
+      "metric_value": 0.02074429822705539,
+      "threshold": 0.005,
+      "description": "Non-null interactions.customer_id values that are absent from customers.customer_id. broken-reference percentage = broken / records checked. FAIL when that rate > 0.005.",
+      "evidence": {
+        "records_checked": 94532,
+        "broken_references": 1961,
+        "broken_reference_percentage": 0.02074429822705539,
+        "sample_unknown_customer_ids": [
+          "C991329",
+          "C991714",
+          "C991375",
+          "C991534",
+          "C991436"
+        ]
+      }
+    },
+    {
+      "rule_id": "DQ004",
+      "check_name": "Campaign Attribution Completeness",
+      "dataset": "interactions",
+      "field": "campaign_id",
+      "dimension": "ATTRIBUTION",
+      "status": "FAIL",
+      "severity": "HIGH",
+      "records_checked": 39401,
+      "records_affected": 6736,
+      "metric_value": 0.17096012791553514,
+      "threshold": 0.08,
+      "description": "Missing campaign_id among campaign-driven interaction types only. Eligible types: ['Email Open', 'Email Click', 'Event Attendance']. Organic / RM interactions with NULL campaign_id are not counted. FAIL when missing attribution rate > 0.08.",
+      "evidence": {
+        "eligible_interaction_types": [
+          "Email Open",
+          "Email Click",
+          "Event Attendance"
+        ],
+        "eligible_campaign_driven_interactions": 39401,
+        "eligible_records_missing_campaign_id": 6736,
+        "missing_attribution_rate": 0.17096012791553514,
+        "non_eligible_interactions": 59064,
+        "non_eligible_null_campaign_id": 43930
+      }
+    },
+    {
+      "rule_id": "DQ005",
+      "check_name": "Industry Null-Rate Spike",
+      "dataset": "customers",
+      "field": "industry",
+      "dimension": "COMPLETENESS",
+      "status": "FAIL",
+      "severity": "HIGH",
+      "records_checked": 2458,
+      "records_affected": 368,
+      "metric_value": 0.1497152156224573,
+      "threshold": 0.05,
+      "description": "Compare industry NULL rate for customers updated in the last 14 days of the dataset versus older customers. Anchored on max(customers.last_updated). FAIL when (recent_null_rate - baseline_null_rate) > 0.05.",
+      "evidence": {
+        "anchor_max_last_updated": "2026-09-30",
+        "window_start": "2026-09-17",
+        "window_days": 14,
+        "recent_records": 2458,
+        "recent_null_industry_count": 368,
+        "recent_null_rate": 0.1497152156224573,
+        "baseline_records": 7692,
+        "baseline_null_industry_count": 0,
+        "baseline_null_rate": 0.0,
+        "rate_difference": 0.1497152156224573
+      }
+    },
+    {
+      "rule_id": "DQ006",
+      "check_name": "Opportunity Freshness",
+      "dataset": "opportunities",
+      "field": "last_updated",
+      "dimension": "FRESHNESS",
+      "status": "FAIL",
+      "severity": "HIGH",
+      "records_checked": 15000,
+      "records_affected": 15000,
+      "metric_value": 7.0,
+      "threshold": 2.0,
+      "description": "Freshness lag in days = max(other datasets' last_updated) minus max(opportunities.last_updated). Other datasets are customers, campaigns, and interactions. System date is not used. FAIL when lag > 2.0 days.",
+      "evidence": {
+        "opportunity_max_last_updated": "2026-09-23",
+        "reference_timestamp": "2026-09-30",
+        "customers_max_last_updated": "2026-09-30",
+        "campaigns_max_last_updated": "2026-09-16",
+        "interactions_max_last_updated": "2026-09-30",
+        "freshness_lag_days": 7.0
+      }
+    },
+    {
+      "rule_id": "DQ007",
+      "check_name": "Interaction Volume Anomaly",
+      "dataset": "interactions",
+      "field": "interaction_date",
+      "dimension": "VOLUME",
+      "status": "FAIL",
+      "severity": "HIGH",
+      "records_checked": 98465,
+      "records_affected": 1527,
+      "metric_value": -0.753330044400592,
+      "threshold": -0.5,
+      "description": "Daily interaction counts compared with a 7-day trailing median (fallback: median of all other days). The engine selects the date with the largest percentage drop. FAIL when percentage deviation <= -0.5.",
+      "evidence": {
+        "method": "Trailing 7-day median of prior daily volumes; fallback median of all other days; percentage deviation from that baseline.",
+        "affected_date": "2026-09-27",
+        "actual_volume": 500,
+        "baseline_volume": 2027.0,
+        "percentage_deviation": -0.753330044400592,
+        "rolling_window_days": 7
+      }
+    }
+  ]
+}
