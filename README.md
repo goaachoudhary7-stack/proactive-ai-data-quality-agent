@@ -1,5 +1,9 @@
 # Proactive AI Data Quality Agent
 
+[Live Demo](https://proactive-ai-data-quality-agent-33ny28zdeolylbfhpirzgc.streamlit.app)
+
+[GitHub Repository](https://github.com/goaachoudhary7-stack/proactive-ai-data-quality-agent)
+
 A portfolio project for a data analyst who has to defend engagement and pipeline numbers. It measures data-quality problems with deterministic checks, separates those measurements from later hypotheses, and lets you profile your own CSV or Excel files without applying the banking rules to them.
 
 All customers, campaigns, interactions, and opportunities are synthetic. They describe a fictional commercial bank created for this project. They are not real customer data.
