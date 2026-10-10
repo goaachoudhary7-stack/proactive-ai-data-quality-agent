@@ -46,25 +46,42 @@ Column details are in [docs/data_dictionary.md](docs/data_dictionary.md).
 
 ```mermaid
 flowchart TD
-  subgraph bankingDemo [Banking demonstration]
-    corrupted[Synthetic corrupted CSVs]
-    engine[Deterministic checks]
-    findings[Saved findings]
-    reports[Saved investigations for DQ001 and DQ004]
-    corrupted --> engine --> findings --> overview[Overview]
-    findings --> reports
+  dash["Streamlit dashboard"]
+
+  subgraph bank ["Banking demonstration"]
+    bankCsv["Synthetic CSV data"]
+    bankChecks["Local Pandas checks"]
+    bankFindings["Saved findings"]
+    bankReports["Saved DQ001 and DQ004 reports"]
   end
-  subgraph uploadSession [My uploaded files]
-    files[CSV or Excel held in this browser session]
-    profile[Profile, key suggestions, relationship suggestions, recommendations]
-    working[Working copy after an approved clean]
-    files --> profile --> analyze[Analyze a file]
-    files --> uploadedOverview[Overview]
-    working --> uploadedOverview
+
+  subgraph upload ["Uploaded CSV or Excel"]
+    uploadFiles["Files kept in this session"]
+    uploadAnalysis["Local Pandas analysis"]
+    uploadFindings["Findings and recommendations"]
+    uploadClean["Cleaning preview and approval"]
+    uploadExport["Exports"]
   end
-  overview --- selector[Active data source]
-  analyze --- selector
-  uploadedOverview --- selector
+
+  subgraph gemini ["Optional Gemini"]
+    consent["Explanation after you approve"]
+  end
+
+  bankCsv --> bankChecks
+  bankChecks --> bankFindings
+  bankFindings --> bankReports
+  bankFindings --> dash
+  bankReports --> dash
+
+  uploadFiles --> uploadAnalysis
+  uploadAnalysis --> uploadFindings
+  uploadFindings --> uploadClean
+  uploadClean --> uploadExport
+  uploadFindings --> dash
+  uploadExport --> dash
+
+  uploadFindings -.-> consent
+  bankFindings -.-> consent
 ```
 
 The banking checks never run on an arbitrary upload. The upload profiler never reads the banking findings file. Optional model text is requested only after you approve the summary shown on the page.
